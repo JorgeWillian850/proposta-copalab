@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CopaLab · Três fases · Proposta para Tiago Sartori</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0b10;
+      --bg-2: #12111a;
+      --panel: #16151f;
+      --panel-2: #1c1b26;
+      --ink: #f4f4f7;
+      --soft: #c6c5ce;
+      --muted: #8b8a96;
+      --line: #2c2b36;
+      --line-strong: #3d3c4a;
+      --accent: #e8a04a;
+      --accent-deep: #c47d28;
+      --accent-dim: rgba(232, 160, 74, 0.14);
+      --warn: #e8a04a;
+      --serif: "IBM Plex Serif", "Iowan Old Style", Palatino, Georgia, "Times New Roman", serif;
+      --sans: "Inter Tight", "Segoe UI", Calibri, system-ui, sans-serif;
+      --mono: "Cascadia Mono", "JetBrains Mono", Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      position: relative;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16.5px;
+      line-height: 1.55;
+      letter-spacing: -0.011em;
+      padding-bottom: 56px;
+      isolation: isolate;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(900px 420px at 8% -8%, rgba(232, 160, 74, 0.11), transparent 58%),
+        radial-gradient(720px 380px at 92% 6%, rgba(232, 160, 74, 0.05), transparent 52%),
+        radial-gradient(640px 520px at 70% 88%, rgba(196, 125, 40, 0.04), transparent 60%),
+        var(--bg);
+      animation: wash 22s ease-in-out infinite alternate;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, #000 30%, transparent 78%);
+      opacity: 0.85;
+    }
+    @keyframes wash {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(0, -18px, 0); }
+    }
+
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: #f3c27a; }
+
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; position: relative; }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      padding: 22px 0 20px;
+      background: rgba(12, 11, 16, 0.72);
+    }
+    header::before {
+      content: "";
+      display: block;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 18%, transparent 62%);
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+    header { position: relative; }
+    header .wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .folio {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4.6vw, 52px);
+      font-weight: 500;
+      letter-spacing: -0.036em;
+      line-height: 1.08;
+      margin-top: 10px;
+    }
+    h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .sub {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14.5px;
+      max-width: 54ch;
+    }
+    .to-whom {
+      border: 1px solid var(--line-strong);
+      border-top: 2px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 16px 13px;
+      min-width: 214px;
+      border-radius: 6px;
+    }
+    .to-whom .lbl {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .to-whom .who {
+      font-family: var(--serif);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-top: 4px;
+    }
+    .to-whom .when {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 22px;
+      padding: 16px 0 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 26px;
+      font-size: 13.5px;
+    }
+    nav.toc a {
+      color: var(--soft);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    nav.toc a:hover { color: var(--accent); }
+
+    .lead {
+      font-family: var(--serif);
+      font-size: 20px;
+      line-height: 1.48;
+      letter-spacing: -0.018em;
+      color: var(--soft);
+      max-width: 68ch;
+      margin-bottom: 30px;
+    }
+    .lead strong { color: var(--ink); font-weight: 500; }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 40px;
+    }
+    .kpi {
+      padding: 18px 16px 16px 0;
+      border-right: 1px solid var(--line);
+    }
+    .kpi:last-child { border-right: none; padding-right: 0; }
+    .kpi:not(:first-child) { padding-left: 16px; }
+    .kpi .n {
+      font-family: var(--serif);
+      font-size: 30px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    .kpi.now .n { color: var(--accent); }
+    .kpi .l {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 7px;
+      line-height: 1.35;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3vw, 34px);
+      font-weight: 500;
+      letter-spacing: -0.028em;
+      margin: 48px 0 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line-strong);
+    }
+    h3 {
+      font-family: var(--serif);
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .note {
+      color: var(--muted);
+      font-size: 14.5px;
+      margin: 0 0 18px;
+      max-width: 78ch;
+    }
+
+    .takeaway, .method {
+      padding: 16px 18px;
+      margin: 18px 0 8px;
+      font-size: 15px;
+      border-radius: 8px;
+    }
+    .takeaway {
+      background: var(--accent-dim);
+      border: 1px solid rgba(232, 160, 74, 0.28);
+    }
+    .takeaway strong { color: var(--accent); font-weight: 600; }
+    .method {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 14.5px;
+      line-height: 1.65;
+    }
+    .method strong { color: var(--ink); }
+
+    .rail { display: grid; gap: 0; margin: 10px 0 8px; }
+    .step {
+      display: grid;
+      grid-template-columns: 108px 22px 1fr;
+      gap: 14px;
+      padding: 0 0 20px;
+    }
+    .step:last-child { padding-bottom: 0; }
+    .when {
+      font-size: 12.5px;
+      color: var(--muted);
+      padding-top: 8px;
+      text-align: right;
+      line-height: 1.35;
+      font-family: var(--mono);
+    }
+    .dotcol { position: relative; }
+    .dotcol::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 16px;
+      bottom: -20px;
+      width: 1px;
+      background: var(--line-strong);
+    }
+    .step:last-child .dotcol::before { display: none; }
+    .dot {
+      width: 15px;
+      height: 15px;
+      border: 2px solid var(--accent);
+      background: var(--bg);
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(232, 160, 74, 0.08);
+    }
+    .step.later .dot { border-color: var(--muted); box-shadow: none; }
+    .cardish {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 15px 16px 16px;
+      border-radius: 8px;
+    }
+    .cardish p { color: var(--soft); font-size: 15px; }
+    .wk {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+    .step.later .wk { color: var(--muted); }
+
+    .phase-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 4px 0 16px;
+      padding: 6px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .phase-tabs button {
+      appearance: none;
+      font-family: var(--sans);
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--soft);
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-align: left;
+      min-width: 140px;
+      flex: 1;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .phase-tabs button .t {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .phase-tabs button .n {
+      display: block;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .phase-tabs button:hover { background: var(--panel-2); }
+    .phase-tabs button.is-on {
+      background: var(--accent-dim);
+      border-color: rgba(232, 160, 74, 0.4);
+    }
+    .phase-tabs button.is-on .t { color: var(--accent); }
+    .phase-panel {
+      display: none;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 22px 22px 20px;
+      animation: tabIn 0.35s ease;
+    }
+    .phase-panel.is-on { display: block; }
+    @keyframes tabIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+    .phase-panel .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin: 8px 0 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .phase-panel .meta b { color: var(--accent); font-weight: 500; }
+    .phase-panel .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 22px;
+    }
+    .phase-panel h4 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .phase-panel ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--soft);
+      font-size: 15px;
+    }
+    .phase-panel li { margin-bottom: 6px; }
+    .phase-panel .full { grid-column: 1 / -1; }
+    .phase-panel .hint {
+      grid-column: 1 / -1;
+      margin-top: 4px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .people {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 22px;
+      align-items: start;
+    }
+    .tree {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 22px 18px 18px;
+      border-radius: 8px;
+    }
+    .boss {
+      border: 1px solid var(--accent);
+      background: var(--panel-2);
+      padding: 14px 16px;
+      margin: 0 auto 8px;
+      max-width: 460px;
+      border-radius: 8px;
+    }
+    .role {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .nm {
+      font-family: var(--serif);
+      font-size: 28px;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin: 2px 0 6px;
+    }
+    .boss p, .leaf p { font-size: 14.5px; color: var(--soft); }
+    .branch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      position: relative;
+      padding-top: 22px;
+    }
+    .branch::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 22px;
+      background: var(--line-strong);
+    }
+    .leaf {
+      border: 1px solid var(--line);
+      padding: 13px 14px;
+      background: var(--bg-2);
+      border-radius: 8px;
+    }
+    .leaf .role { color: var(--soft); }
+    .leaf .nm { font-size: 24px; }
+    .client {
+      background: var(--panel);
+      border: 1px dashed var(--line-strong);
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .client .role { color: var(--accent); }
+    .client .nm { font-size: 26px; }
+    .client p { color: var(--soft); font-size: 14.5px; }
+
+    .mmap-intro { max-width: 78ch; }
+
+    .mmap {
+      position: relative;
+      width: 1120px;
+      max-width: 100%;
+      height: 960px;
+      margin: 8px auto 12px;
+      background:
+        linear-gradient(180deg, rgba(232, 160, 74, 0.04), transparent 28%),
+        var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .mmap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .mmap svg.wires {
+      position: absolute;
+      inset: 0;
+      width: 1120px;
+      height: 960px;
+      pointer-events: none;
+    }
+    .wires path.solid {
+      stroke-dasharray: 420;
+      stroke-dashoffset: 0;
+    }
+    .mmap.will-reveal .wires path.solid { stroke-dashoffset: 420; }
+    .mmap.is-draw .wires path.solid {
+      animation: draw 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .mmap.is-draw .wires path.solid:nth-of-type(2) { animation-delay: 0.08s; }
+    .mmap.is-draw .wires path.solid:nth-of-type(3) { animation-delay: 0.14s; }
+    .mmap.is-draw .wires path.solid:nth-of-type(5) { animation-delay: 0.22s; }
+    .mmap.is-draw .wires path.solid:nth-of-type(6) { animation-delay: 0.28s; }
+    .mmap.is-draw .wires path.solid:nth-of-type(7) { animation-delay: 0.34s; }
+    .mmap.is-draw .wires path.solid:nth-of-type(8) { animation-delay: 0.4s; }
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+    .mn {
+      position: absolute;
+      background: var(--panel-2);
+      border: 1px solid var(--line-strong);
+      padding: 11px 12px 12px;
+      width: 248px;
+      border-radius: 8px;
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+    .mn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(232, 160, 74, 0.45);
+    }
+    .mn .kind {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--soft);
+      margin-bottom: 2px;
+    }
+    .mn h3 {
+      font-size: 20px;
+      margin: 0 0 5px;
+      line-height: 1.1;
+    }
+    .mn .fn {
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .mn .fn b { font-weight: 600; }
+    .mn .why {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.4;
+      border-top: 1px solid var(--line);
+      padding-top: 6px;
+    }
+    .mn.hub {
+      width: 220px;
+      text-align: left;
+      border: 1px solid var(--accent);
+      background: #1f1c18;
+      padding: 14px 16px;
+      box-shadow: 0 0 0 4px var(--accent-dim);
+    }
+    .mn.hub .kind { color: var(--accent); }
+    .mn.hub h3 { font-size: 28px; margin-bottom: 4px; }
+    .mn.hub .fn { margin-bottom: 0; color: var(--soft); font-size: 14px; }
+    .mn.std { border-color: var(--accent); }
+    .mn.std .kind { color: var(--accent); }
+    .mn.opt {
+      width: 230px;
+      border-style: dashed;
+      opacity: 0.96;
+      background: var(--bg-2);
+    }
+    .mn.opt .kind { color: var(--muted); }
+
+    .n-hub { left: 450px; top: 360px; transform: none; }
+    .n-cursor { left: 40px; top: 28px; }
+    .n-git { left: 40px; top: 290px; }
+    .n-railway { left: 808px; top: 24px; width: 280px; }
+    .n-fallback { left: 830px; top: 248px; }
+    .n-cf { left: 808px; top: 530px; width: 280px; }
+    .n-riot { left: 40px; top: 555px; width: 270px; }
+    .n-pix { left: 808px; top: 700px; width: 280px; }
+    .n-pix .kind { color: var(--accent); }
+    .n-dom { left: 420px; top: 780px; transform: none; width: 280px; }
+
+    .mmap-mobile { display: none; }
+    .mtree { display: grid; gap: 0; }
+    .mtree .hub-row { display: flex; justify-content: center; margin-bottom: 8px; }
+    .mtree .mn {
+      position: static;
+      transform: none;
+      width: 100%;
+      max-width: 420px;
+    }
+    .mtree .arms { display: grid; gap: 10px; }
+    .mtree .stem {
+      width: 1px;
+      height: 16px;
+      background: var(--line-strong);
+      margin: 0 auto;
+    }
+
+    .quotes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .quote {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 18px 18px 16px;
+      border-radius: 8px;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.4s ease;
+    }
+    .quote:hover {
+      transform: translateY(-6px);
+      border-color: rgba(232, 160, 74, 0.4);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.38);
+    }
+    .quote.rec {
+      border-color: var(--accent);
+      background:
+        linear-gradient(180deg, rgba(232, 160, 74, 0.08), transparent 36%),
+        var(--panel);
+    }
+    .quote .lbl {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .quote.rec .lbl { color: var(--accent); }
+    .quote .val {
+      font-family: var(--serif);
+      font-size: 30px;
+      margin: 8px 0 4px;
+      letter-spacing: -0.03em;
+    }
+    .quote.rec .val { color: var(--accent); }
+    .quote .alt {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .quote ul { margin: 0 0 0 17px; color: var(--soft); font-size: 14.5px; }
+    .quote li { margin: 5px 0; }
+
+    .pays {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line);
+      margin: 22px 0 8px;
+    }
+    .pay {
+      padding: 16px 16px 15px 0;
+      border-right: 1px solid var(--line);
+    }
+    .pay:last-child { border-right: none; padding-right: 0; }
+    .pay:not(:first-child) { padding-left: 16px; }
+    .pay .pct {
+      font-family: var(--serif);
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+    .pay .amt {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .pay p {
+      color: var(--muted);
+      font-size: 13.5px;
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .host, .out {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+      border-radius: 8px;
+    }
+    .host table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14.5px;
+    }
+    .host th, .host td {
+      text-align: left;
+      padding: 8px 8px 8px 0;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .host th { color: var(--muted); font-weight: 600; font-size: 12.5px; }
+    .host tr:last-child td { border-bottom: none; }
+    .out ul { margin: 8px 0 0 18px; color: var(--soft); font-size: 15px; }
+    .out li { margin: 6px 0; }
+
+    .cols2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .cols3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line-strong);
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.7;
+      font-family: var(--mono);
+    }
+
+    .reveal { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.will-reveal { transform: translateY(16px); }
+    .reveal.is-in { transform: none; }
+    .mmap .mn { transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease; }
+    .mmap.will-reveal .mn { transform: translateY(10px); }
+    .mmap.is-in .mn { transform: none; }
+    .mmap.is-in .n-cursor { transition-delay: 0.05s; }
+    .mmap.is-in .n-git { transition-delay: 0.1s; }
+    .mmap.is-in .n-railway { transition-delay: 0.12s; }
+    .mmap.is-in .n-fallback { transition-delay: 0.18s; }
+    .mmap.is-in .n-cf { transition-delay: 0.22s; }
+    .mmap.is-in .n-riot { transition-delay: 0.16s; }
+    .mmap.is-in .n-pix { transition-delay: 0.26s; }
+    .mmap.is-in .n-dom { transition-delay: 0.3s; }
+    .mmap.is-in .n-hub { transition-delay: 0.02s; }
+    .mmap.is-in .mn:hover,
+    .mn:hover {
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 980px) {
+      .kpis, .quotes, .people, .split, .cols2, .cols3, .pays { grid-template-columns: 1fr; }
+      .kpi, .pay { border-right: none; border-bottom: 1px solid var(--line); padding: 14px 0; }
+      .kpi:last-child, .pay:last-child { border-bottom: none; }
+      .branch { grid-template-columns: 1fr; }
+      .branch::before { display: none; }
+      .step { grid-template-columns: 86px 18px 1fr; }
+      .phase-panel .grid { grid-template-columns: 1fr; }
+      .phase-tabs button { min-width: 0; }
+      h1 { font-size: 34px; }
+      .mmap { display: none; }
+      .mmap-mobile { display: block; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal.will-reveal, .mmap.will-reveal .mn { transform: none; }
+    }
+
+    @media print {
+      body { background: #fff; color: #111; padding: 0; font-size: 12pt; }
+      body::before, body::after { display: none; }
+      header, .lead, .cardish, .tree, .leaf, .boss, .client,
+      .quote, .host, .out, .takeaway, .method, .mn, .mmap {
+        background: #fff !important;
+        color: inherit;
+        box-shadow: none;
+      }
+      nav.toc { display: none; }
+      a { color: inherit; }
+      .mmap { break-inside: avoid; height: 780px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>
+        <div class="folio">CopaLab · Três fases · Proposta comercial · set/2026</div>
+        <h1>Proto, produto e <em>manutenção</em></h1>
+        <p class="sub">Um mês para deixar o app no ar e protocolar o pedido na Riot. Em seguida o produto LoL. Depois manutenção mensal. Jogo novo é linha à parte.</p>
+      </div>
+      <div class="to-whom">
+        <div class="lbl">Preparado para</div>
+        <div class="who">Tiago Sartori</div>
+        <div class="when">setembro de 2026</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="toc" aria-label="Seções">
+      <a href="#leitura">Leitura</a>
+      <a href="#processo">Processo</a>
+      <a href="#riot">Riot</a>
+      <a href="#pessoas">Pessoas</a>
+      <a href="#ferramentas">Mapa das ferramentas</a>
+      <a href="#orcamento">Orçamento</a>
+      <a href="#fora">Fora de escopo</a>
+    </nav>
+
+    <p class="lead" id="leitura">
+      O <strong>CopaLab</strong> é uma copa comunitária de League of Legends na web.
+      A proposta tem <strong>três fases</strong>: primeiro o proto no ar e o pedido oficial à Riot, depois o produto LoL com a API liberada, e em seguida a manutenção do que já está funcionando.
+      A Fase 1 é o pacote para <strong>subir o app e protocolar a aprovação</strong>: proto na nuvem, foto completa do produto e o envio no portal da Riot.
+      F1 + F2 somam <strong>R$ 32.000 de construção</strong>.
+      Depósito e saque entram na Fase 2, com a PJ e o processador prontos.
+      Jogo novo (CS, Dota e outros) é adição à parte, um de cada vez.
+    </p>
+
+    <div class="kpis">
+      <div class="kpi now">
+        <div class="n">R$ 8.000</div>
+        <div class="l">Fase 1 · 1 mês · app no ar e pedido oficial à Riot</div>
+      </div>
+      <div class="kpi now">
+        <div class="n">R$ 24.000</div>
+        <div class="l">Fase 2 · 3 meses · produto LoL com a API liberada</div>
+      </div>
+      <div class="kpi">
+        <div class="n">R$ 2.000 / mês</div>
+        <div class="l">Fase 3 · manutenção do LoL no ar</div>
+      </div>
+      <div class="kpi">
+        <div class="n">2 a 8 sem.</div>
+        <div class="l">Tempo usual de análise da Riot depois do proto no ar</div>
+      </div>
+    </div>
+
+    <h2 id="processo">Processo</h2>
+    <p class="note">
+      Clique na fase para abrir o detalhe na apresentação. A Fase 1 começa no fechamento. A Fase 2 começa quando a API estiver liberada. Manutenção é mensal, com o LoL já no ar.
+    </p>
+
+    <div class="phase-tabs" role="tablist" aria-label="Fases da proposta">
+      <button type="button" class="is-on" role="tab" aria-selected="true" aria-controls="fase-1" id="tab-1" data-phase="1">
+        <span class="t">1 mês · R$ 8.000</span>
+        <span class="n">Fase 1</span>
+      </button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="fase-2" id="tab-2" data-phase="2">
+        <span class="t">3 meses · R$ 24.000</span>
+        <span class="n">Fase 2</span>
+      </button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="fase-3" id="tab-3" data-phase="3">
+        <span class="t">mês a mês · R$ 2.000</span>
+        <span class="n">Manutenção</span>
+      </button>
+    </div>
+
+    <div id="fase-1" class="phase-panel is-on" role="tabpanel" aria-labelledby="tab-1">
+      <div class="wk">Fase 1 · proto</div>
+      <h3>App no ar e pedido oficial à Riot</h3>
+      <div class="meta">
+        <span><b>Quando.</b> 1 mês a partir do fechamento</span>
+        <span><b>Valor.</b> R$ 8.000 à vista</span>
+        <span><b>Saída.</b> Site no Railway + pedido protocolado</span>
+      </div>
+      <div class="grid">
+        <div>
+          <h4>O que sobe no ar</h4>
+          <ul>
+            <li>Conta, copa, inscrição, chave e ranking</li>
+            <li>Tela da custom: horário, adversário e código</li>
+            <li>Painel para marcar resultado</li>
+            <li>Domínio começando e Railway ligado</li>
+          </ul>
+        </div>
+        <div>
+          <h4>O que vai para a Riot</h4>
+          <ul>
+            <li>Proto completo para eles avaliarem</li>
+            <li>Pedido de production e Tournament API</li>
+            <li>Descrição de copa e custom, texto claro</li>
+          </ul>
+        </div>
+        <div>
+          <h4>O que a PJ organiza neste mês</h4>
+          <ul>
+            <li>Checklist do processador e do PIX</li>
+            <li>O que precisa estar pronto para a Fase 2</li>
+            <li>Depósito e saque ainda não entram no ar</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Depois deste mês</h4>
+          <ul>
+            <li>A Riot analisa o app que já está no ar</li>
+            <li>Na prática, 2 a 8 semanas para a key de produção</li>
+            <li>A Fase 2 começa na sequência da liberação</li>
+          </ul>
+        </div>
+        <p class="hint">Este mês existe para o produto chegar completo na mesa da Riot e para vocês andarem no proto juntos. Lenita informa o prazo.</p>
+      </div>
+    </div>
+
+    <div id="fase-2" class="phase-panel" role="tabpanel" aria-labelledby="tab-2" hidden>
+      <div class="wk">Fase 2 · produto LoL</div>
+      <h3>O miolo Tipspace, só League</h3>
+      <div class="meta">
+        <span><b>Quando.</b> 3 meses com a API liberada</span>
+        <span><b>Valor.</b> R$ 24.000 em 40 / 30 / 30</span>
+        <span><b>Saída.</b> LoL funcional no estilo Tips</span>
+      </div>
+      <div class="grid">
+        <div>
+          <h4>Produto</h4>
+          <ul>
+            <li>Recursos principais no estilo Tipspace, só LoL</li>
+            <li>Código oficial de torneio para copiar e colar</li>
+            <li>Fila e copa no app, resultado pela API</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Windows e código</h4>
+          <ul>
+            <li>Companion: com o LoL aberto, o app aplica o código</li>
+            <li>Se o jogo estiver fechado ou a custom for em outro horário, o código fica na tela</li>
+          </ul>
+        </div>
+        <div>
+          <h4>PIX</h4>
+          <ul>
+            <li>Depósito e saque com a PJ e o processador prontos</li>
+            <li>O time integra; o Tiago opera o dinheiro</li>
+            <li>Se o jurídico ainda estiver andando, o PIX entra assim que ele estiver pronto, ainda nesta janela se der</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Pagamento desta fase</h4>
+          <ul>
+            <li>40% no início · R$ 9.600</li>
+            <li>30% no meio · R$ 7.200</li>
+            <li>30% na entrega do LoL · R$ 7.200</li>
+          </ul>
+        </div>
+        <p class="hint">F1 + F2 = R$ 32.000 de construção. A Riot já analisou o proto da Fase 1. Aqui o produto passa a operar de verdade.</p>
+      </div>
+    </div>
+
+    <div id="fase-3" class="phase-panel" role="tabpanel" aria-labelledby="tab-3" hidden>
+      <div class="wk">Manutenção · depois do LoL no ar</div>
+      <h3>O League continua funcionando</h3>
+      <div class="meta">
+        <span><b>Quando.</b> Mês a mês, depois da Fase 2</span>
+        <span><b>Valor.</b> R$ 2.000 / mês</span>
+        <span><b>Jogo novo.</b> R$ 8.000 por adição</span>
+      </div>
+      <div class="grid">
+        <div>
+          <h4>Entra nos R$ 2.000</h4>
+          <ul>
+            <li>Host, domínio e o site no ar</li>
+            <li>Correção do que a F1 e a F2 já entregaram</li>
+            <li>Olho no painel da nuvem e na key</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Não entra nestes R$ 2.000</h4>
+          <ul>
+            <li>CS, Dota ou outro título</li>
+            <li>Recurso novo fora do LoL já entregue</li>
+            <li>Isso vira linha à parte</li>
+          </ul>
+        </div>
+        <div class="full">
+          <h4>Quando entrar outro jogo</h4>
+          <ul>
+            <li>R$ 8.000 por adição: enquadramento e primeiro miolo na plataforma</li>
+            <li>Um jogo de cada vez, no mesmo recorte da Fase 2</li>
+          </ul>
+        </div>
+        <p class="hint">Nome curto na apresentação: Manutenção. É o mês a mês depois do LoL no ar, não um “pós prod” solto.</p>
+      </div>
+    </div>
+
+    <div class="takeaway reveal">
+      <strong>Como mostrar.</strong>
+      Começa na Fase 1. Quando a Riot estiver no assunto, fica nesta aba (análise depois do proto). Depois vai para a Fase 2. Manutenção é o terceiro clique.
+      Se o fechamento for em meados de set, a F1 vai até meados de out. Lenita informa prazo.
+    </div>
+
+    <h2 id="riot">Pedido na Riot</h2>
+    <p class="note">A Fase 1 entrega o app pronto para eles avaliarem.</p>
+    <div class="method reveal">
+      <strong>O proto no ar é o que a Riot pede para analisar.</strong>
+      Na prática, a key de produção costuma sair em <strong>2 a 8 semanas</strong> depois do site no ar e da descrição pronta.
+      A Tournament API segue no mesmo pedido, um passo depois da key de produção.
+      Um texto claro de copa e custom, sem cara de casa de aposta, ajuda o andamento.
+      A Fase 2 começa na sequência dessa liberação.
+    </div>
+
+    <h2 id="pessoas">Time</h2>
+    <p class="note">Quem coordena, quem constrói, quem conduz comercial e o lado PJ/PSP/jurídico.</p>
+
+    <div class="people reveal">
+      <div class="tree">
+        <div class="boss">
+          <div class="role">Coordenação</div>
+          <div class="nm">Lenita</div>
+          <p>Coordena o projeto e os desenvolvedores. Organiza o recorte semanal. É quem informa prazos e necessidades, para o Tiago e para o time.</p>
+        </div>
+        <div class="branch">
+          <div class="leaf">
+            <div class="role">Build + ferramentas</div>
+            <div class="nm">Jorge</div>
+            <p>Constrói o site. Opera Railway, banco, deploy, pedido Riot e o que o painel da nuvem pedir. Integra o PIX quando a PJ e o PSP estiverem prontos.</p>
+          </div>
+          <div class="leaf">
+            <div class="role">Build + ferramentas</div>
+            <div class="nm">Matheus</div>
+            <p>Constrói o site junto. Divide a operação das ferramentas (servidores, bancos, DNS) com o Jorge.</p>
+          </div>
+        </div>
+      </div>
+      <aside class="client">
+        <div class="role">Cliente · comercial + PJ</div>
+        <div class="nm">Tiago Sartori</div>
+        <p>Comercial, streamers e o lado do negócio. Contrata PJ, PSP e o jurídico. Opera o dinheiro quando o PIX existir. Recebe prazo da Lenita.</p>
+      </aside>
+    </div>
+
+    <div class="method reveal">
+      <strong>Como ler.</strong>
+      Lenita coordena. Jorge e Matheus constroem. Tiago conduz comercial, PJ, PSP e o jurídico.
+    </div>
+
+    <h2 id="ferramentas">Mapa mental das ferramentas</h2>
+    <p class="note mmap-intro">
+      O produto no centro. Cada ramo é uma conta ou stack que o time abre ou já usa.
+      No nó: <strong>nome</strong>, <strong>função neste projeto</strong> e o porquê em uma linha.
+      Fase 1 = proto + nuvem + pedido Riot. PIX fica preparado na F1 e vivo na F2. Railway é o padrão.
+    </p>
+
+    <div class="mmap" role="img" aria-label="Mapa mental: CopaLab no centro, ramos para Cursor e Next.js, Git remoto, Railway, Cloudflare, domínio, Portal Riot, PIX/PSP e fallback Vercel com Neon.">
+      <svg class="wires" viewBox="0 0 1120 960" width="1120" height="960" aria-hidden="true">
+        <path class="solid" d="M470 368 C 400 260, 340 160, 292 118" fill="none" stroke="#8b8a96" stroke-width="1.6" />
+        <path class="solid" d="M450 410 C 380 400, 340 388, 292 380" fill="none" stroke="#8b8a96" stroke-width="1.6" />
+        <path class="solid" d="M670 368 C 730 250, 770 160, 808 118" fill="none" stroke="#e8a04a" stroke-width="2" />
+        <path d="M808 188 C 748 210, 740 290, 830 318" fill="none" stroke="#6d6c78" stroke-width="1.5" stroke-dasharray="5 4" />
+        <path class="solid" d="M670 458 C 730 530, 770 570, 808 590" fill="none" stroke="#8b8a96" stroke-width="1.6" />
+        <path class="solid" d="M480 478 C 400 540, 350 590, 310 628" fill="none" stroke="#8b8a96" stroke-width="1.6" />
+        <path class="solid" d="M670 478 C 740 580, 780 660, 808 760" fill="none" stroke="#e8a04a" stroke-width="1.7" />
+        <path class="solid" d="M560 480 L 560 780" fill="none" stroke="#8b8a96" stroke-width="1.6" />
+        <circle cx="292" cy="118" r="3.2" fill="#8b8a96" />
+        <circle cx="292" cy="380" r="3.2" fill="#8b8a96" />
+        <circle cx="808" cy="118" r="3.2" fill="#e8a04a" />
+        <circle cx="830" cy="318" r="3" fill="#6d6c78" />
+        <circle cx="808" cy="590" r="3.2" fill="#8b8a96" />
+        <circle cx="310" cy="628" r="3.2" fill="#8b8a96" />
+        <circle cx="808" cy="760" r="3.2" fill="#e8a04a" />
+        <circle cx="560" cy="780" r="3.2" fill="#8b8a96" />
+        <text x="318" y="220" fill="#8b8a96" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">código</text>
+        <text x="318" y="368" fill="#8b8a96" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">fonte</text>
+        <text x="700" y="200" fill="#e8a04a" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">nuvem padrão</text>
+        <text x="688" y="268" fill="#8b8a96" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">plano B</text>
+        <text x="700" y="548" fill="#8b8a96" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">dns</text>
+        <text x="318" y="560" fill="#8b8a96" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">pedido F1</text>
+        <text x="700" y="680" fill="#e8a04a" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">preparado F1</text>
+        <text x="572" y="650" fill="#8b8a96" font-size="11" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="1.5">nome</text>
+      </svg>
+
+      <article class="mn n-cursor">
+        <div class="kind">Já no proto</div>
+        <h3>Cursor + Next.js</h3>
+        <p class="fn"><b>Função.</b> Editor e stack do CopaLab: web, TypeScript, Prisma, painel admin.</p>
+        <p class="why">Já está escrito. Sem trocar de framework no meio da Fase 1. Ferramenta de trabalho do time, não um item à parte na proposta.</p>
+      </article>
+
+      <article class="mn n-git">
+        <div class="kind">Fonte do time</div>
+        <h3>Git remoto</h3>
+        <p class="fn"><b>Função.</b> Repositório compartilhado (GitHub ou equivalente). Não é a pasta local de uma máquina.</p>
+        <p class="why">Deploy no push. Lenita, Jorge e Matheus veem o mesmo histórico.</p>
+      </article>
+
+      <article class="mn hub n-hub">
+        <div class="kind">O produto</div>
+        <h3>CopaLab</h3>
+        <p class="fn">Copa comunitária de LoL na web. Fase 1: proto + nuvem + pedido Riot. PIX só preparado. Daqui saem os ramos.</p>
+      </article>
+
+      <article class="mn std n-railway">
+        <div class="kind">Padrão · nuvem</div>
+        <h3>Railway</h3>
+        <p class="fn"><b>Função.</b> App Next.js e Postgres no mesmo projeto. Processo sempre ligado. Sobe já na Fase 1.</p>
+        <p class="why">Um painel só. US$ 15 a 25 / mês no pequeno prod (cerca de R$ 80 a 140). Sem cold start de hobby. Nuvem padrão desta proposta.</p>
+      </article>
+
+      <article class="mn opt n-fallback">
+        <div class="kind">Fallback · não começar aqui</div>
+        <h3>Vercel + Neon</h3>
+        <p class="fn"><b>Função.</b> App na Vercel, Postgres no Neon, só se o Railway travar na semana do ar.</p>
+        <p class="why">Dois painéis, cerca de US$ 20 a 40 / mês. Hobby da Vercel em 2026 é uso pessoal. Não compre os dois stacks juntos.</p>
+      </article>
+
+      <article class="mn n-cf">
+        <div class="kind">DNS</div>
+        <h3>Cloudflare</h3>
+        <p class="fn"><b>Função.</b> DNS e SSL na faixa grátis. Troca de host sem mudar de registrador.</p>
+        <p class="why">Custa zero. Se o Railway falhar, aponta o mesmo domínio para o fallback sem comprar outro DNS.</p>
+      </article>
+
+      <article class="mn n-riot">
+        <div class="kind">Pedido na F1</div>
+        <h3>Portal Riot</h3>
+        <p class="fn"><b>Função.</b> Protocolar production e Tournament API no mês do proto. A Fase 2 começa com a API liberada.</p>
+        <p class="why">Análise usual de 2 a 8 semanas depois do proto no ar. Tournament API segue no mesmo pedido.</p>
+      </article>
+
+      <article class="mn n-pix">
+        <div class="kind">Preparado na F1 · vivo na F2</div>
+        <h3>PIX / PSP</h3>
+        <p class="fn"><b>Função.</b> Na F1: checklist e o que a PJ contrata. Na F2: depósito e saque ao vivo se PSP e PJ estiverem prontos.</p>
+        <p class="why">O time integra. Tiago ou a PJ dele contrata o PSP e opera o dinheiro. Jorge não segura saldo.</p>
+      </article>
+
+      <article class="mn n-dom">
+        <div class="kind">Nome público · começa na F1</div>
+        <h3>Domínio .com / .com.br</h3>
+        <p class="fn"><b>Função.</b> Nome próprio cedo. Não usar marca Riot nem Tipspace.</p>
+        <p class="why">A doc de callback da Riot é chata com TLD novo. .com uns US$ 12 a 16 / ano. .com.br cerca de R$ 40 / ano. Comprar na abertura.</p>
+      </article>
+    </div>
+
+    <div class="mmap-mobile" aria-label="Mapa mental em lista, para tela estreita.">
+      <div class="mtree">
+        <div class="hub-row">
+          <article class="mn hub">
+            <div class="kind">O produto</div>
+            <h3>CopaLab</h3>
+            <p class="fn">Copa comunitária de LoL na web. Fase 1: proto + nuvem + pedido Riot. PIX só preparado. Daqui saem os ramos.</p>
+          </article>
+        </div>
+        <div class="stem"></div>
+        <div class="arms">
+          <article class="mn">
+            <div class="kind">Já no proto · código</div>
+            <h3>Cursor + Next.js</h3>
+            <p class="fn"><b>Função.</b> Editor e stack do CopaLab: web, TypeScript, Prisma, painel admin.</p>
+            <p class="why">Já está escrito. Sem trocar de framework no meio da Fase 1. Ferramenta de trabalho do time, não um item à parte na proposta.</p>
+          </article>
+          <article class="mn">
+            <div class="kind">Fonte do time</div>
+            <h3>Git remoto</h3>
+            <p class="fn"><b>Função.</b> Repositório compartilhado (GitHub ou equivalente). Não é a pasta local de uma máquina.</p>
+            <p class="why">Deploy no push. Lenita, Jorge e Matheus veem o mesmo histórico.</p>
+          </article>
+          <article class="mn std">
+            <div class="kind">Padrão · nuvem</div>
+            <h3>Railway</h3>
+            <p class="fn"><b>Função.</b> App Next.js e Postgres no mesmo projeto. Processo sempre ligado. Sobe já na Fase 1.</p>
+            <p class="why">Um painel só. US$ 15 a 25 / mês no pequeno prod (cerca de R$ 80 a 140). Sem cold start de hobby. Nuvem padrão desta proposta.</p>
+          </article>
+          <article class="mn opt">
+            <div class="kind">Fallback · ramo menor</div>
+            <h3>Vercel + Neon</h3>
+            <p class="fn"><b>Função.</b> App na Vercel, Postgres no Neon, só se o Railway travar na semana do ar.</p>
+            <p class="why">Dois painéis, cerca de US$ 20 a 40 / mês. Hobby da Vercel em 2026 é uso pessoal. Não compre os dois stacks juntos.</p>
+          </article>
+          <article class="mn">
+            <div class="kind">DNS</div>
+            <h3>Cloudflare</h3>
+            <p class="fn"><b>Função.</b> DNS e SSL na faixa grátis. Troca de host sem mudar de registrador.</p>
+            <p class="why">Custa zero. Se o Railway falhar, aponta o mesmo domínio para o fallback sem comprar outro DNS.</p>
+          </article>
+          <article class="mn">
+            <div class="kind">Nome público · começa na F1</div>
+            <h3>Domínio .com / .com.br</h3>
+            <p class="fn"><b>Função.</b> Nome próprio cedo. Não usar marca Riot nem Tipspace.</p>
+            <p class="why">A doc de callback da Riot é chata com TLD novo. .com uns US$ 12 a 16 / ano. .com.br cerca de R$ 40 / ano. Comprar na abertura.</p>
+          </article>
+          <article class="mn">
+            <div class="kind">Pedido na F1</div>
+            <h3>Portal Riot</h3>
+            <p class="fn"><b>Função.</b> Protocolar production e Tournament API no mês do proto. A Fase 2 começa com a API liberada.</p>
+            <p class="why">Análise usual de 2 a 8 semanas depois do proto no ar. Tournament API segue no mesmo pedido.</p>
+          </article>
+          <article class="mn">
+            <div class="kind">Preparado na F1 · vivo na F2</div>
+            <h3>PIX / PSP</h3>
+            <p class="fn"><b>Função.</b> Na F1: checklist e o que a PJ contrata. Na F2: depósito e saque ao vivo se PSP e PJ estiverem prontos.</p>
+            <p class="why">O time integra. Tiago ou a PJ dele contrata o PSP e opera o dinheiro. Jorge não segura saldo.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="method reveal">
+      <strong>Como ler o mapa.</strong>
+      Ramos cheios saem do CopaLab. Railway é o padrão (borda âmbar). Vercel + Neon pende do Railway em tracejado: plano B, não o começo.
+      Fase 1 = proto no ar + pedido Riot. PIX fica preparado na F1 e entra na F2. Não comece no Fly.io. Não compre os dois stacks de nuvem ao mesmo tempo.
+    </div>
+
+    <h2 id="orcamento">Orçamento</h2>
+    <p class="note">
+      Três fases, três preços. A Fase 1 sobe o app e protocola o pedido. A Fase 2 constrói o produto LoL com a API liberada. A Fase 3 mantém o que já está no ar. Jogo novo é linha à parte.
+    </p>
+
+    <div class="quotes">
+      <article class="quote rec">
+        <div class="lbl">Fase 1 · 1 mês</div>
+        <div class="val">R$ 8.000</div>
+        <p class="alt">App no ar e pedido oficial à Riot · à vista no fechamento</p>
+        <ul>
+          <li>Protótipo funcional no Railway, com conta, copa, custom e ranking para a Riot e para vocês verem</li>
+          <li>Domínio começando e pedido de production e Tournament API protocolado no portal</li>
+          <li>Checklist do que a PJ precisa ter pronto para o PIX entrar na Fase 2</li>
+          <li>Este mês existe para o app chegar completo na mesa da Riot</li>
+        </ul>
+      </article>
+      <article class="quote">
+        <div class="lbl">Fase 2 · 3 meses</div>
+        <div class="val">R$ 24.000</div>
+        <p class="alt">Produto LoL com a API liberada · F1+F2 = R$ 32.000</p>
+        <ul>
+          <li>LoL principal no estilo Tips: o miolo da plataforma, só League</li>
+          <li>Código oficial de torneio para copiar e colar</li>
+          <li>Companion Windows: com o LoL aberto, o app aplica o código. Se o jogo estiver fechado ou a custom for em outro horário, o código fica na tela</li>
+          <li>PIX com a PJ e o processador prontos. O time integra; o Tiago opera o dinheiro</li>
+        </ul>
+      </article>
+      <article class="quote">
+        <div class="lbl">Fase 3 · depois do LoL funcional</div>
+        <div class="val">R$ 2.000 / mês</div>
+        <p class="alt">Host e correção do que já está no ar</p>
+        <ul>
+          <li>Mantém no ar o que a F1 e a F2 entregaram</li>
+          <li>Correção de bugs do escopo já construído</li>
+          <li>Sem jogo novo e sem recurso novo nesta linha</li>
+          <li>Mensal, depois do LoL funcional</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="cols2 reveal" style="margin-top: 14px;">
+      <article class="quote">
+        <div class="lbl">Jogo novo · cada adição</div>
+        <div class="val">R$ 8.000</div>
+        <p class="alt">CS, Dota e outros · um de cada vez</p>
+        <ul>
+          <li>Adição daquele jogo: enquadramento e primeiro miolo na plataforma</li>
+          <li>Primeiro miolo daquele jogo na plataforma, no mesmo recorte da Fase 2</li>
+          <li>Um jogo de cada vez. Recursos extras continuam fora</li>
+        </ul>
+      </article>
+      <article class="quote rec">
+        <div class="lbl">Construção · F1 + F2</div>
+        <div class="val">R$ 32.000</div>
+        <p class="alt">R$ 8.000 + R$ 24.000 · proto e produto LoL</p>
+        <ul>
+          <li>Esse é o total para ter o LoL no ar, da proto até o produto</li>
+          <li>A Fase 3 e o jogo novo não entram nessa soma</li>
+        </ul>
+      </article>
+    </div>
+
+    <h3 style="margin-top: 28px;">Pagamento</h3>
+    <p class="note">Fase 1 à vista no fechamento. Fase 2 em três parcelas (40 / 30 / 30) sobre os R$ 24.000, quando a API estiver liberada e o produto começar. Fase 3 é mensal depois do LoL funcional. Jogo novo se paga na adição.</p>
+    <div class="pays reveal">
+      <div class="pay">
+        <div class="pct">F1</div>
+        <div class="amt">R$ 8.000</div>
+        <p>À vista no fechamento. O mês do proto.</p>
+      </div>
+      <div class="pay">
+        <div class="pct">40%</div>
+        <div class="amt">R$ 9.600</div>
+        <p>F2, no início, com a API liberada</p>
+      </div>
+      <div class="pay">
+        <div class="pct">30%</div>
+        <div class="amt">R$ 7.200</div>
+        <p>F2, no meio dos três meses</p>
+      </div>
+      <div class="pay">
+        <div class="pct">30%</div>
+        <div class="amt">R$ 7.200</div>
+        <p>F2, na entrega do produto LoL</p>
+      </div>
+    </div>
+
+    <div class="split reveal">
+      <div class="host" id="host">
+        <h3>Ferramentas</h3>
+        <p class="note" style="margin: 6px 0 10px;">Estimativa set/2026. 1 USD ≈ R$ 5,50. Na F1 e na F2 entram no preço da fase. Na F3, entram na manutenção mensal.</p>
+        <table>
+          <thead>
+            <tr><th>Item</th><th>Faixa</th><th>Nota</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Railway app + Postgres</td>
+              <td>US$ 15 a 25 / mês<br />R$ 80 a 140</td>
+              <td>Sobe na Fase 1. Sempre ligado. Dentro dos 8.000 do mês.</td>
+            </tr>
+            <tr>
+              <td>Domínio .com ou .com.br</td>
+              <td>R$ 40 a 90 / ano</td>
+              <td>Começa na Fase 1. Renovação na manutenção da F3.</td>
+            </tr>
+            <tr>
+              <td>Cloudflare</td>
+              <td>R$ 0</td>
+              <td>DNS e SSL na faixa grátis.</td>
+            </tr>
+            <tr>
+              <td>Riot Developer Portal</td>
+              <td>R$ 0</td>
+              <td>Pedido protocolado na Fase 1. Análise usual de 2 a 8 semanas.</td>
+            </tr>
+            <tr>
+              <td>PSP / PIX</td>
+              <td>taxas do processador</td>
+              <td>A cargo do Tiago ou da PJ. Preparado na F1, vivo na F2 se ele estiver pronto. O time só integra.</td>
+            </tr>
+            <tr>
+              <td>Ferramentas na F1</td>
+              <td>Railway + domínio</td>
+              <td>Já dentro dos R$ 8.000 do mês.</td>
+            </tr>
+            <tr>
+              <td>Ferramentas na F3</td>
+              <td>dentro dos R$ 2.000 / mês</td>
+              <td>A manutenção cobre host, domínio e bugs do que já está no ar. Sem jogo novo e sem recurso novo.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="out" id="fora">
+        <h3>Fora deste preço</h3>
+        <ul>
+          <li>Depósito e saque na Fase 1 (entram na Fase 2)</li>
+          <li>O prazo de resposta da Riot (ela analisa no ritmo dela)</li>
+          <li>Companion idêntico ao da Tips em todo patch do LoL</li>
+          <li>Jogo novo ou recurso novo na linha de manutenção</li>
+          <li>Produto completo estilo Tips em CS, Dota ou outro título no pacote de R$ 8.000</li>
+          <li>Vários jogos novos ao mesmo tempo</li>
+          <li>Recursos extras além do primeiro miolo da adição</li>
+          <li>Apostas em partidas de terceiros</li>
+          <li>Taxas e contrato do PSP (Tiago ou a PJ dele)</li>
+          <li>O time operar saldo, KYC ou compliance no lugar da PJ</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cols3 reveal" style="margin-top: 18px;">
+      <div class="cardish">
+        <h3>O que a Fase 1 entrega</h3>
+        <p>Proto funcional na nuvem. Foto completa do app (conta, copa, custom, ranking). Pedido oficial à Riot. Checklist do que a PJ precisa para o PIX entrar na Fase 2. Railway e domínio começando.</p>
+      </div>
+      <div class="cardish">
+        <h3>O que a Fase 2 entrega</h3>
+        <p>LoL principal no estilo Tips. Código oficial para copiar e colar. Companion Windows com o LoL aberto; código na tela se o jogo estiver fechado. PIX com a PJ e o processador prontos. Três meses com a API liberada.</p>
+      </div>
+      <div class="cardish">
+        <h3>O que a Fase 3 entrega</h3>
+        <p>Host e correção do que já está no ar. Mensal a R$ 2.000, depois do LoL funcional. Jogo novo é R$ 8.000 por adição, um de cada vez.</p>
+      </div>
+    </div>
+
+    <h2>Próximo passo</h2>
+    <div class="takeaway reveal">
+      Fechar a Fase 1 (R$ 8.000, um mês, à vista) sobe o proto, o Railway e o pedido oficial à Riot.
+      Se o fechamento for em meados de set, a F1 vai até meados de out.
+      F1 + F2 = R$ 32.000 de construção.
+      A Fase 2 (R$ 24.000, três meses, 40 / 30 / 30) começa com a API liberada.
+      A Fase 3 é R$ 2.000 / mês depois do LoL funcional.
+      Jogo novo é R$ 8.000 por adição, um de cada vez.
+      Lenita informa prazo. Jorge e Matheus constroem. Tiago conduz comercial, PJ, PSP e o jurídico.
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      CopaLab · Três fases · Proposta para Tiago Sartori · setembro de 2026<br />
+      F1 R$ 8.000 · 1 mês · app no ar e pedido Riot · F2 R$ 24.000 · 3 meses com a API liberada · construção F1+F2 R$ 32.000 · F3 R$ 2.000 / mês · jogo novo R$ 8.000 cada
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll(".phase-tabs button");
+      var panels = {
+        "1": document.getElementById("fase-1"),
+        "2": document.getElementById("fase-2"),
+        "3": document.getElementById("fase-3")
+      };
+
+      function showPhase(id) {
+        tabs.forEach(function (btn) {
+          var on = btn.getAttribute("data-phase") === id;
+          btn.classList.toggle("is-on", on);
+          btn.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        Object.keys(panels).forEach(function (key) {
+          var panel = panels[key];
+          if (!panel) return;
+          var on = key === id;
+          panel.classList.toggle("is-on", on);
+          if (on) panel.removeAttribute("hidden");
+          else panel.setAttribute("hidden", "");
+        });
+      }
+
+      tabs.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          showPhase(btn.getAttribute("data-phase"));
+        });
+      });
+
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce || !("IntersectionObserver" in window)) return;
+
+      var reveals = document.querySelectorAll(".reveal");
+      var map = document.querySelector(".mmap");
+
+      reveals.forEach(function (el) { el.classList.add("will-reveal"); });
+      if (map) map.classList.add("will-reveal");
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-in");
+          if (entry.target.classList.contains("mmap")) {
+            entry.target.classList.add("is-draw");
+          }
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.14, rootMargin: "0px 0px -6% 0px" });
+
+      reveals.forEach(function (el) { io.observe(el); });
+      if (map) io.observe(map);
+    })();
+  </script>
+</body>
+</html>
